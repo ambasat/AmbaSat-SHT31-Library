@@ -70,9 +70,6 @@ bool AmbaSatSHT31::readSensorValues(void)
     // wait to complete
     delay(20);
 
-    // need to wait for the measurement to be done.
-//    delay(500);
-
     uint8_t localBuffer[6];
 
     if (!readSensorData(localBuffer, 6)) 
@@ -80,16 +77,7 @@ bool AmbaSatSHT31::readSensorValues(void)
         PRINTLN_DEBUG(F("ERROR: Failed to read measurement data"));
         return false;
     }
-
-    /*
-
-     if ( (calculateCRC(&localBuffer[0], 2, SHT30_CRC_POLYNOMIAL) != localBuffer[2]) || (calculateCRC(&localBuffer[3], 2, SHT30_CRC_POLYNOMIAL) != localBuffer[5]) ) 
-     {
-        PRINTLN_ERROR(F("ERROR: CRC check failed when reading SHT30 measurement."));
-        return nullptr;
-    }
-    */
-   
+  
     uint16_t temperatureReading = (uint16_t)localBuffer[0]*256 + localBuffer[1];
     uint16_t humidityReading = (uint16_t)localBuffer[3]*256 + localBuffer[4];
    
